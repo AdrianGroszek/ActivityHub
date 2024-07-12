@@ -18,6 +18,7 @@
 
 .footerContainer ul li {
 	font-size: 1.25rem;
+	transition: 0.3s;
 }
 
 .footerContainer ul li:hover {
