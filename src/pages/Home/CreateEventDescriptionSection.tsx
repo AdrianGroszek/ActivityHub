@@ -46,8 +46,8 @@ export default function CreateEventDescriptionSection() {
 					creation process, allowing you to:
 				</p>
 				<ul>
-					{descriptionData.map((item) => (
-						<li className={styles.listItem}>
+					{descriptionData.map((item, index) => (
+						<li key={index} className={styles.listItem}>
 							<div className={styles.starContainer}>
 								<FaStar className={styles.star} />
 							</div>

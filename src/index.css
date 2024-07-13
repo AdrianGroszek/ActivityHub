@@ -64,3 +64,20 @@ h5,
 h6 {
 	overflow-wrap: break-word;
 }
+
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--color-black-500);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--color-cyan-light);
+	border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--color-cyan-dark);
+}

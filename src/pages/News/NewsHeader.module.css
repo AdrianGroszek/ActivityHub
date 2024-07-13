@@ -1,0 +1,12 @@
+.heading {
+	padding: 2rem 0;
+}
+
+.heading h1 {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.heading p {
+	color: var(--color-gray);
+}
