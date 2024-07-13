@@ -1,0 +1,16 @@
+.reviewsSection {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-bottom: 10rem;
+}
+
+.reviewsSection h3 {
+	font-size: 2rem;
+	margin-bottom: 2rem;
+}
+
+.reviewsSection h3 span {
+	color: var(--color-cyan-dark);
+}
