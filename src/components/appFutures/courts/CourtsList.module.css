@@ -1,0 +1,11 @@
+.courtsList {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	height: 672px;
+	overflow-y: scroll;
+}
+
+.courtsList::-webkit-scrollbar {
+	display: none;
+}

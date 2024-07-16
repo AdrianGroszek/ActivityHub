@@ -1,0 +1,28 @@
+.sectionsWrapper {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	height: calc(100vh - 5rem);
+}
+
+.appFilterSectionLeft {
+	height: 100%;
+	width: 50%;
+	padding: 1rem;
+}
+
+.appFilterSectionLeft > *:not(:last-child) {
+	margin-bottom: 2rem;
+}
+
+.appDetailsSectionRight {
+	overflow: hidden;
+	height: 100%;
+	width: 50%;
+	border-radius: 8px;
+	background: var(--color-black-500);
+}
+
+.mapWrapper {
+	height: 45%;
+}

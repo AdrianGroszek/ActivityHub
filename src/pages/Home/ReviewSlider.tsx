@@ -33,7 +33,7 @@ const reviewData: ReviewItem[] = [
 		username: 'Emily Johnson',
 		userSport: 'basketball',
 		description:
-			'FitConnect has revolutionized my fitness journey. The workout plans are tailored to my needs, and the community support keeps me motivated. I love tracking my progress and sharing milestones with friends. This app is a game-changer for anyone serious about their health!',
+			'ActivityHub has revolutionized my fitness journey. The workout plans are tailored to my needs, and the community support keeps me motivated. I love tracking my progress and sharing milestones with friends. This app is a game-changer for anyone serious about their health!',
 		image: reviewImgTwo,
 	},
 	{
@@ -41,7 +41,7 @@ const reviewData: ReviewItem[] = [
 		username: 'Michael Smith',
 		userSport: 'tenis',
 		description:
-			'FoodieFinder is a must-have for any culinary enthusiast. The recipe recommendations are spot-on, and the ability to create and share custom meal plans is fantastic. I ve discovered so many new dishes and met fellow food lovers. Highly recommend for foodies!',
+			'ActivityHub is a must-have for any culinary enthusiast. The recipe recommendations are spot-on, and the ability to create and share custom meal plans is fantastic. I ve discovered so many new dishes and met fellow food lovers. Highly recommend for foodies!',
 		image: reviewImgThree,
 	},
 	{
@@ -49,7 +49,7 @@ const reviewData: ReviewItem[] = [
 		username: 'Sarah Williams',
 		userSport: 'football',
 		description:
-			'BookWorm has rekindled my love for reading. The personalized book suggestions are always on point, and the virtual book clubs are a great way to discuss and share thoughts with fellow readers. I ve discovered so many new authors and genres. Highly recommend for book lovers!',
+			'ActivityHub has rekindled my love for reading. The personalized book suggestions are always on point, and the virtual book clubs are a great way to discuss and share thoughts with fellow readers. I ve discovered so many new authors and genres. Highly recommend for book lovers!',
 		image: reviewImgFour,
 	},
 	{

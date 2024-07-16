@@ -48,7 +48,9 @@ export default function WhyUsSection() {
 					</div>
 				</li>
 			</ul>
-			<Button variant='primary'>Get Started</Button>
+			<Button to='/app' variant='primary'>
+				Get Started
+			</Button>
 		</section>
 	);
 }

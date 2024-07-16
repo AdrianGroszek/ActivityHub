@@ -3,6 +3,8 @@ import Root from './pages/Root';
 import HomePage from './pages/HomePage';
 import NewsPage from './pages/NewsPage';
 import HelpPage from './pages/HelpPage';
+import AppPage from './pages/AppPage';
+import CourtDescription from './components/appFutures/courts/CourtDescription';
 
 const Router = createBrowserRouter([
 	{
@@ -14,19 +16,33 @@ const Router = createBrowserRouter([
 				element: <HomePage />,
 			},
 			{
-				path: '/news',
+				path: 'news',
 				element: <NewsPage />,
 			},
 			{
-				path: '/help',
+				path: 'help',
 				element: <HelpPage />,
+			},
+			{
+				path: 'app/courts',
+				element: <AppPage />,
+				children: [
+					{
+						path: ':courtId',
+						element: <CourtDescription />,
+					},
+				],
 			},
 		],
 	},
 ]);
 
 function App() {
-	return <RouterProvider router={Router} />;
+	return (
+		<>
+			<RouterProvider router={Router} />
+		</>
+	);
 }
 
 export default App;

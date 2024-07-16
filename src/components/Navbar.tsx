@@ -39,8 +39,12 @@ export default function Navbar() {
 					</li>
 				</ul>
 				<div className={styles.btnContainer}>
-					<Button variant='secondary'>Sing Up</Button>
-					<Button variant='primary'>Login</Button>
+					<Button to='/app/courts' variant='secondary'>
+						Sing Up
+					</Button>
+					<Button to='/app/courts' variant='primary'>
+						Login
+					</Button>
 				</div>
 			</div>
 		</nav>

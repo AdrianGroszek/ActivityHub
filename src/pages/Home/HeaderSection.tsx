@@ -20,7 +20,9 @@ export default function HeaderSection() {
 					allowing you to create and join sports events effortlessly.
 				</p>
 				<div>
-					<Button variant='primary'>Get Started</Button>
+					<Button to='/app' variant='primary'>
+						Get Started
+					</Button>
 				</div>
 			</div>
 			<div className={styles.mouseContainer}>

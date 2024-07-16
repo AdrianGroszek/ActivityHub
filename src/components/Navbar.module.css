@@ -10,7 +10,7 @@
 	padding: 0.5rem 1rem;
 	border-bottom: 1px solid var(--color-gray);
 	box-shadow: 12px 0px 16px rgba(0, 0, 0, 0.6);
-	z-index: 100;
+	z-index: 1100;
 }
 
 .logo {
@@ -52,7 +52,7 @@
 	color: var(--color-cyan-light);
 }
 
-.btnContainer button:not(:last-child) {
+.btnContainer a:first-child {
 	margin-right: 0.75rem;
 }
 
