@@ -13,3 +13,8 @@
 	color: var(--color-cyan-light);
 	border-color: var(--color-cyan-light);
 }
+
+.active {
+	color: var(--color-cyan-light);
+	border-color: var(--color-cyan-light);
+}

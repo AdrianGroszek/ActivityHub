@@ -7,7 +7,7 @@
 	justify-content: space-between;
 	align-items: center;
 	background-color: var(--color-black-900);
-	padding: 0.5rem 1rem;
+	padding: 0.5rem 10%;
 	border-bottom: 1px solid var(--color-gray);
 	box-shadow: 12px 0px 16px rgba(0, 0, 0, 0.6);
 	z-index: 1100;
@@ -20,7 +20,7 @@
 		var(--color-cyan-dark)
 	);
 	-webkit-background-clip: text;
-	font-size: 1.25rem;
+	font-size: 1.75rem;
 	font-weight: bold;
 	-webkit-text-fill-color: transparent;
 }
@@ -52,13 +52,14 @@
 	color: var(--color-cyan-light);
 }
 
-.btnContainer a:first-child {
+.btnContainer a:first-child,
+.btnContainer button:first-child {
 	margin-right: 0.75rem;
 }
 
 /* RESPONSIVE STYLES */
 
-@media only screen and (min-width: 1280px) {
+/* @media only screen and (min-width: 1280px) {
 	.navbar {
 		justify-content: space-around;
 	}
@@ -76,4 +77,4 @@
 	.logo {
 		font-size: 1.75rem;
 	}
-}
+} */

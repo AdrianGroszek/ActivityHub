@@ -4,6 +4,7 @@ import { Link, type LinkProps } from 'react-router-dom';
 
 type BaseProps = {
 	variant: 'primary' | 'secondary';
+	isActive?: boolean;
 };
 
 type ButtonProps = ComponentPropsWithoutRef<'button'> &
@@ -13,7 +14,7 @@ type ButtonLinkProps = LinkProps & BaseProps & { to: string };
 
 type Props = ButtonProps | ButtonLinkProps;
 
-export default function Button({ variant, ...props }: Props) {
+export default function Button({ variant, isActive, ...props }: Props) {
 	const variantStyle =
 		variant === 'primary' ? styles.btnPrimary : styles.btnSecondary;
 
@@ -21,7 +22,9 @@ export default function Button({ variant, ...props }: Props) {
 		const { to, ...linkProps } = props as ButtonLinkProps;
 		return (
 			<Link
-				className={`${styles.btn} ${variantStyle}`}
+				className={`${styles.btn} ${variantStyle} ${
+					isActive ? styles.isActiveBtn : ''
+				}`}
 				to={to}
 				{...linkProps}
 			/>

@@ -5,15 +5,17 @@ export type UserType = {
 	email: string;
 	password: string;
 	age: number;
-	joinedEvents: number[];
+	createdEvents: string[];
+	joinedEvents: string[];
 };
 
 export const user: UserType = {
 	id: '1',
-	firstName: 'Test',
-	lastName: 'User',
+	firstName: 'Zack',
+	lastName: 'Efron',
 	email: 'testuser@test.com',
 	password: 'testtest123',
 	age: 28,
+	createdEvents: [],
 	joinedEvents: [],
 };

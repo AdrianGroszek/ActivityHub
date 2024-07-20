@@ -19,6 +19,7 @@ const initialState: StateType = {
 type CourtsContextType = StateType & {
 	selectCourt: (court: CourtType) => void;
 	filterCourts: (courtCategory: string) => void;
+	resetSelectedCourt: () => void;
 };
 
 const CourtsContext = createContext<CourtsContextType | null>(null);
@@ -45,7 +46,14 @@ type FilterCourtsCategoryAction = {
 	courtCategory: string;
 };
 
-type Action = SelectCourtAction | FilterCourtsCategoryAction;
+type ResetSelectedCourtAction = {
+	type: 'RESET_SELECTED_COURT';
+};
+
+type Action =
+	| SelectCourtAction
+	| FilterCourtsCategoryAction
+	| ResetSelectedCourtAction;
 
 function courtsReducer(state: StateType, action: Action): StateType {
 	switch (action.type) {
@@ -69,6 +77,14 @@ function courtsReducer(state: StateType, action: Action): StateType {
 				}),
 			};
 		}
+		case 'RESET_SELECTED_COURT': {
+			return {
+				...state,
+				selectedCourt: null,
+				filterCategory: 'All',
+				filteredCourts: state.courts,
+			};
+		}
 		default:
 			return state;
 	}
@@ -89,6 +105,9 @@ export default function CourtsContextProvider({
 		},
 		filterCourts(courtCategory) {
 			dispatch({ type: 'FILTER_COURTS_CATEGORY', courtCategory });
+		},
+		resetSelectedCourt() {
+			dispatch({ type: 'RESET_SELECTED_COURT' });
 		},
 	};
 

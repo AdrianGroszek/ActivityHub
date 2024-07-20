@@ -1,4 +1,4 @@
-import { FaLocationDot, FaStar, FaUsers } from 'react-icons/fa6';
+import { FaLocationDot, FaUsers } from 'react-icons/fa6';
 import styles from './CourtDescription.module.css';
 import { useParams } from 'react-router-dom';
 import { useCourts } from '../../../context/courts-context';
@@ -21,9 +21,6 @@ export default function CourtDescription() {
 				<div className={styles.topContentDescription}>
 					<div className={styles.courtNameContainer}>
 						<h3>{selectedCourt?.name}</h3>
-						<p>
-							<FaStar />
-						</p>
 					</div>
 					<div>
 						<ul className={styles.courtDetailsList}>

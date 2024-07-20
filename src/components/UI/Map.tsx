@@ -8,9 +8,10 @@ import footballIcon from '../../assets/football-ball-map-icon.png';
 import tennisBallIcon from '../../assets/tennisball-map-icon.png';
 import voleyballIcon from '../../assets/volleyball-map-icon.png';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useCourts } from '../../context/courts-context';
 import { useEffect, useState } from 'react';
+import { useEvents } from '../../context/events-context';
 
 type lIconType = {
 	iconUrl: string;
@@ -70,55 +71,115 @@ const selectSportIcon = (
 };
 
 export default function Map() {
-	const { filteredCourts, selectedCourt } = useCourts();
+	const { filteredCourts, selectedCourt, filterCategory } = useCourts();
+	const { filteredEvents, selectedEvent, eventFilterCategory } = useEvents();
+	const location = useLocation();
 	const [mapCenter, setMapCenter] = useState<[number, number]>([54.5, 18.6]);
 	const [mapZoom, setMapZoom] = useState<number>(9);
 
+	const urlPathSlug: string = location.pathname.split('/')[2];
+
 	useEffect(() => {
-		if (selectedCourt) {
-			setMapZoom(12);
+		setMapZoom(12);
+		if (location.pathname.includes('courts') && selectedCourt) {
 			setMapCenter(selectedCourt.coordinates);
 		}
-	}, [selectedCourt]);
+		if (location.pathname.includes('events') && selectedEvent) {
+			setMapCenter(selectedEvent.coordinates);
+		}
+	}, [selectedCourt, selectedEvent, location]);
 
-	return (
-		<MapContainer
-			center={mapCenter}
-			zoom={mapZoom}
-			key={`${mapCenter[0]}-${mapCenter[1]}`}
-			style={{ height: '100%', width: '100%' }}>
-			<TileLayer
-				url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
-				attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-			/>
-			{filteredCourts.map((court) => (
-				<Marker
-					key={court.id}
-					position={court.coordinates}
-					icon={selectSportIcon(court.category)}>
-					<Popup position={court.coordinates}>
-						<div className={styles.customPopupWrapper}>
-							<img
-								src={court.photos[0]}
-								alt={court.name}
-								className={styles.popupImg}
-							/>
-							<div className={styles.textWrapper}>
-								<h2>{court.name}</h2>
-								<p>{court.location}</p>
-								<p>Sport: {court.category}</p>
-								<p>Players: {court.capacity}</p>
-								<p className={court.isFree ? styles.free : styles.paid}>
-									{court.isFree ? 'Free to use' : 'Paid'}
-								</p>
-								<Link to={court.id} className={styles.courtDetailsLink}>
-									Court Details
-								</Link>
+	useEffect(() => {
+		setMapZoom(9);
+		setMapCenter([54.5, 18.6]);
+	}, [filterCategory, eventFilterCategory, urlPathSlug]);
+
+	// Map for courts route
+	if (location.pathname.includes('courts')) {
+		return (
+			<MapContainer
+				center={mapCenter}
+				zoom={mapZoom}
+				key={`${mapCenter[0]}-${mapCenter[1]}`}
+				style={{ height: '100%', width: '100%' }}>
+				<TileLayer
+					url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+				/>
+
+				{filteredCourts.map((court) => (
+					<Marker
+						key={court.id}
+						position={court.coordinates}
+						icon={selectSportIcon(court.category)}>
+						<Popup position={court.coordinates}>
+							<div className={styles.customPopupWrapper}>
+								<img
+									src={court.photos[0]}
+									alt={court.name}
+									className={styles.popupImg}
+								/>
+								<div className={styles.textWrapper}>
+									<h2>{court.name}</h2>
+									<p>{court.location}</p>
+									<p>Sport: {court.category}</p>
+									<p>Players: {court.capacity}</p>
+									<p className={court.isFree ? styles.free : styles.paid}>
+										{court.isFree ? 'Free to use' : 'Paid'}
+									</p>
+									<Link to={court.id} className={styles.courtDetailsLink}>
+										Court Details
+									</Link>
+								</div>
 							</div>
-						</div>
-					</Popup>
-				</Marker>
-			))}
-		</MapContainer>
-	);
+						</Popup>
+					</Marker>
+				))}
+			</MapContainer>
+		);
+	}
+
+	// Map for Events route
+	if (location.pathname.includes('events')) {
+		return (
+			<MapContainer
+				center={mapCenter}
+				zoom={mapZoom}
+				key={`${mapCenter[0]}-${mapCenter[1]}`}
+				style={{ height: '100%', width: '100%' }}>
+				<TileLayer
+					url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+				/>
+				{filteredEvents.map((event) => (
+					<Marker
+						key={event.id}
+						position={event.coordinates}
+						icon={selectSportIcon(event.category)}>
+						<Popup position={event.coordinates}>
+							<div className={styles.customPopupWrapper}>
+								<img
+									src={event.photo}
+									alt='{event.name}'
+									className={styles.popupImg}
+								/>
+								<div className={styles.textWrapper}>
+									<h2>sss</h2>
+									<p>{event.location}</p>
+									<p>Sport: {event.category}</p>
+									<p>Players: {event.participants.length}</p>
+									<p className={event.isFree ? styles.free : styles.paid}>
+										{event.isFree ? 'Free to use' : 'Paid'}
+									</p>
+									<Link to={event.id} className={styles.courtDetailsLink}>
+										Event Detail
+									</Link>
+								</div>
+							</div>
+						</Popup>
+					</Marker>
+				))}
+			</MapContainer>
+		);
+	}
 }

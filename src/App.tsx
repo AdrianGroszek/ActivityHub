@@ -5,6 +5,7 @@ import NewsPage from './pages/NewsPage';
 import HelpPage from './pages/HelpPage';
 import AppPage from './pages/AppPage';
 import CourtDescription from './components/appFutures/courts/CourtDescription';
+import CreateEvent from './pages/CreateEvent';
 
 const Router = createBrowserRouter([
 	{
@@ -32,6 +33,20 @@ const Router = createBrowserRouter([
 						element: <CourtDescription />,
 					},
 				],
+			},
+			{
+				path: 'app/events',
+				element: <AppPage />,
+				children: [
+					{
+						path: ':eventId',
+						element: <h1>Event Desc</h1>,
+					},
+				],
+			},
+			{
+				path: 'app/create',
+				element: <CreateEvent />,
 			},
 		],
 	},

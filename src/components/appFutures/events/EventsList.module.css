@@ -1,0 +1,11 @@
+.eventsList {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	height: 672px;
+	overflow-y: scroll;
+}
+
+.eventsList::-webkit-scrollbar {
+	display: none;
+}
