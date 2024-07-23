@@ -1,10 +1,12 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import { UserType } from '../data/user';
+import { updateUser } from '../data/users';
 
 type UserLoginContextType = {
 	user: UserType | null;
 	login: (user: UserType) => void;
 	logout: () => void;
+	updateJoinedEvents: (eventId: string) => void;
 };
 
 const UserLoginContext = createContext<UserLoginContextType | null>(null);
@@ -31,8 +33,20 @@ export function UserLoginProvider({ children }: UserLoginProviderProps) {
 		setUser(null);
 	}
 
+	function updateJoinedEvents(eventId: string) {
+		if (user) {
+			const updatedUser = {
+				...user,
+				joinedEvents: [...user.joinedEvents, eventId],
+			};
+			setUser(updatedUser);
+			updateUser(user.id, { joinedEvents: updatedUser.joinedEvents });
+		}
+	}
+
 	return (
-		<UserLoginContext.Provider value={{ user, login, logout }}>
+		<UserLoginContext.Provider
+			value={{ user, login, logout, updateJoinedEvents }}>
 			{children}
 		</UserLoginContext.Provider>
 	);

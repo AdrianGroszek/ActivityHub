@@ -71,8 +71,10 @@ const selectSportIcon = (
 };
 
 export default function Map() {
-	const { filteredCourts, selectedCourt, filterCategory } = useCourts();
-	const { filteredEvents, selectedEvent, eventFilterCategory } = useEvents();
+	const { filteredCourts, selectCourt, selectedCourt, filterCategory } =
+		useCourts();
+	const { filteredEvents, selectEvent, selectedEvent, eventFilterCategory } =
+		useEvents();
 	const location = useLocation();
 	const [mapCenter, setMapCenter] = useState<[number, number]>([54.5, 18.6]);
 	const [mapZoom, setMapZoom] = useState<number>(9);
@@ -127,7 +129,10 @@ export default function Map() {
 									<p className={court.isFree ? styles.free : styles.paid}>
 										{court.isFree ? 'Free to use' : 'Paid'}
 									</p>
-									<Link to={court.id} className={styles.courtDetailsLink}>
+									<Link
+										to={court.id}
+										onClick={() => selectCourt(court)}
+										className={styles.courtDetailsLink}>
 										Court Details
 									</Link>
 								</div>
@@ -164,14 +169,20 @@ export default function Map() {
 									className={styles.popupImg}
 								/>
 								<div className={styles.textWrapper}>
-									<h2>sss</h2>
+									<h2>{event.title}</h2>
 									<p>{event.location}</p>
 									<p>Sport: {event.category}</p>
-									<p>Players: {event.participants.length}</p>
+									<p>
+										Players: {event.participants.length} /{' '}
+										{selectedEvent?.playerCount}
+									</p>
 									<p className={event.isFree ? styles.free : styles.paid}>
 										{event.isFree ? 'Free to use' : 'Paid'}
 									</p>
-									<Link to={event.id} className={styles.courtDetailsLink}>
+									<Link
+										to={event.id}
+										onClick={() => selectEvent(event)}
+										className={styles.courtDetailsLink}>
 										Event Detail
 									</Link>
 								</div>

@@ -13,6 +13,7 @@ import { useEvents } from '../context/events-context';
 import { Link, useNavigate } from 'react-router-dom';
 import { pl } from 'date-fns/locale';
 import { FaAnglesLeft } from 'react-icons/fa6';
+import TagSpan from '../components/UI/TagSpan';
 
 registerLocale('pl', pl);
 
@@ -87,9 +88,19 @@ export default function CreateEvent() {
 				</Link>
 				<h1>Create New Event</h1>
 				{selectedCourt && (
-					<div>
-						<p>{selectedCourt.category}</p>
-						<p>{selectedCourt.isFree ? 'Free' : 'Paid'}</p>
+					<div className={styles.topSelectedCourtView}>
+						<img src={selectedCourt.photos[0]} alt='' />
+						<div>
+							{selectedCourt.isFree ? (
+								<TagSpan textColor='#cdf7f3' bgColor='rgba(205, 247, 243, 0.1)'>
+									FREE
+								</TagSpan>
+							) : (
+								<TagSpan textColor='#ffd972' bgColor='rgba(255, 217, 114, 0.1)'>
+									PAID
+								</TagSpan>
+							)}
+						</div>
 					</div>
 				)}
 				<div>
@@ -99,7 +110,7 @@ export default function CreateEvent() {
 							<option value=''>Select a court</option>
 							{courts.map((court) => (
 								<option key={court.id} value={court.id}>
-									{court.name}, {court.location}
+									{court.name}, {court.location}, ({court.category})
 								</option>
 							))}
 						</select>
@@ -121,6 +132,7 @@ export default function CreateEvent() {
 							value={eventDescription}
 							onChange={(e) => setEventDescription(e.target.value)}
 							maxLength={200}
+							required
 						/>
 					</label>
 				</div>
@@ -161,6 +173,7 @@ export default function CreateEvent() {
 						type='number'
 						label='Min-age'
 						id='min-age'
+						min={0}
 						required
 					/>
 					<Input
@@ -169,6 +182,8 @@ export default function CreateEvent() {
 						type='number'
 						label='Max-age'
 						id='max-age'
+						min={user?.age}
+						max={99}
 						required
 					/>
 				</div>
@@ -177,6 +192,7 @@ export default function CreateEvent() {
 					onChange={(e) => setPlayersNumber(e.target.value)}
 					type='number'
 					id='players-num'
+					min={2}
 					label='Number of players'
 					required
 				/>
@@ -190,6 +206,7 @@ export default function CreateEvent() {
 						timeIntervals={30}
 						timeFormat='HH:mm'
 						locale='pl'
+						required
 					/>
 				</div>
 

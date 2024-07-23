@@ -1,12 +1,13 @@
-// TEMPORARY STYLES %@#%
+// TEMPORARY STYLES from courtItem
 import styles from '../courts/CourtItem.module.css';
 
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useEvents } from '../../../context/events-context';
 import { type EventType } from '../../../data/events';
 import { FaLocationDot, FaUsers } from 'react-icons/fa6';
 import { useCourts } from '../../../context/courts-context';
 import { formatEventTime } from '../../../helpers';
+import TagSpan from '../../UI/TagSpan';
 
 type EventItemProp = {
 	event: EventType;
@@ -16,6 +17,7 @@ export default function EventItem({ event }: EventItemProp) {
 	const { selectEvent } = useEvents();
 	const { courts } = useCourts();
 	const { eventId } = useParams<{ eventId: string }>();
+	const location = useLocation();
 
 	const selectedStyle: string =
 		eventId === event.id ? styles.activeCourtItem : '';
@@ -27,10 +29,14 @@ export default function EventItem({ event }: EventItemProp) {
 		selectEvent(event);
 	}
 
+	const chooseRoute: string = location.pathname.includes('courts')
+		? `/app/events/${event.id}`
+		: event.id;
+
 	return (
 		<li>
 			<Link
-				to={event.id}
+				to={chooseRoute}
 				className={`${styles.courtItem} ${selectedStyle}`}
 				onClick={handleClick}>
 				<img
@@ -41,7 +47,9 @@ export default function EventItem({ event }: EventItemProp) {
 				<div className={styles.descriptionContainer}>
 					<div className={styles.topContainer}>
 						<p>{event.title}</p>
-						<p>{formatEventTime(event.eventTime)}</p>
+						<p className={styles.timeText}>
+							{formatEventTime(event.eventTime)}
+						</p>
 					</div>
 					<div className={styles.bottomContainer}>
 						<ul className={styles.courtDetailsList}>
@@ -49,7 +57,9 @@ export default function EventItem({ event }: EventItemProp) {
 								<p>
 									<FaUsers className={styles.detailsIcon} />
 								</p>
-								<span>Prayers {event.participants.length}</span>
+								<span>
+									Prayers {event.participants.length}/{event.playerCount}
+								</span>
 							</li>
 							<li>
 								<p>
@@ -59,7 +69,15 @@ export default function EventItem({ event }: EventItemProp) {
 							</li>
 						</ul>
 						<div>
-							<span>{event.isFree ? 'FREE' : 'PAID'}</span>
+							{event.isFree ? (
+								<TagSpan textColor='#cdf7f3' bgColor='rgba(205, 247, 243, 0.1)'>
+									FREE
+								</TagSpan>
+							) : (
+								<TagSpan textColor='#ffd972' bgColor='rgba(255, 217, 114, 0.1)'>
+									PAID
+								</TagSpan>
+							)}
 						</div>
 					</div>
 				</div>

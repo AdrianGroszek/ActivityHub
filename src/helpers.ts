@@ -10,5 +10,5 @@ export function whichRouteIsActive(
 
 export function formatEventTime(eventTime: string): string {
 	const date = new Date(eventTime);
-	return format(date, 'dd/MM/yy HH:mm');
+	return format(date, 'dd.MM.yy HH:mm');
 }

@@ -2,15 +2,15 @@ import { Link, NavLink } from 'react-router-dom';
 import styles from './Navbar.module.css';
 import Button from './UI/Button';
 import { useUserLogin } from '../context/user-login-context';
-import { user as userFromDataFile } from '../data/user';
+import { users } from '../data/users';
 import UserProfileNav from './UserProfileNav';
+// import { UserType } from '../data/user';
 
 export default function Navbar() {
-	const { user, login } = useUserLogin();
-
+	const { user, login, logout } = useUserLogin();
 	return (
 		<nav className={styles.navbar}>
-			<Link to='/' className={styles.logo}>
+			<Link to='/' onClick={logout} className={styles.logo}>
 				ActivityHub
 			</Link>
 			<div className={styles.linksContainer}>
@@ -50,7 +50,7 @@ export default function Navbar() {
 							<Button variant='secondary'>Sing Up</Button>
 							<Button
 								to='/app/courts'
-								onClick={() => login(userFromDataFile)}
+								onClick={() => login(users[0])}
 								variant='primary'>
 								Login
 							</Button>

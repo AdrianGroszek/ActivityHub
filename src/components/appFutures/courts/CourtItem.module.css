@@ -87,3 +87,8 @@
 	background-color: rgb(68, 42, 38);
 	color: tomato;
 }
+
+.topContainer .timeText {
+	font-weight: normal;
+	color: var(--color-gray);
+}

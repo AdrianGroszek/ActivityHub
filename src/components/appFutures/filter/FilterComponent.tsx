@@ -13,12 +13,25 @@ import { useCourts } from '../../../context/courts-context';
 import { useLocation } from 'react-router-dom';
 import { whichRouteIsActive } from '../../../helpers';
 import { useEvents } from '../../../context/events-context';
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function FilterComponent() {
-	const { filterCourts, resetSelectedCourt } = useCourts();
-	const { filterEvents, events, resetSelectedEvent } = useEvents();
+	const {
+		filterCourts,
+		resetSelectedCourt,
+		filterCategory,
+		searchCourtByLocation,
+	} = useCourts();
+	const {
+		filterEvents,
+		eventFilterCategory,
+		events,
+		resetSelectedEvent,
+		searchEventByLocation,
+	} = useEvents();
 	const location = useLocation();
+
+	const [locationInputValue, setLocationInputValue] = useState('');
 
 	//Check if pathname includes 'courts' or 'events'
 	const urlPathSlug: string = location.pathname.split('/')[2];
@@ -26,6 +39,7 @@ export default function FilterComponent() {
 	useEffect(() => {
 		resetSelectedEvent();
 		resetSelectedCourt();
+		setLocationInputValue('');
 	}, [urlPathSlug]);
 
 	function handleOnClickFilter(category: string) {
@@ -35,6 +49,23 @@ export default function FilterComponent() {
 		if (location.pathname.includes('events')) {
 			filterEvents(category);
 		}
+	}
+
+	useEffect(() => {
+		if (location.pathname.includes('events')) {
+			searchEventByLocation(locationInputValue);
+		}
+		if (location.pathname.includes('courts')) {
+			searchCourtByLocation(locationInputValue);
+		}
+	}, [locationInputValue]);
+
+	useEffect(() => {
+		setLocationInputValue('');
+	}, [eventFilterCategory, filterCategory]);
+
+	function handleSearchEvent(event: ChangeEvent<HTMLInputElement>) {
+		setLocationInputValue(event.target.value.toLowerCase());
 	}
 
 	return (
@@ -87,7 +118,13 @@ export default function FilterComponent() {
 						</CircleButton>
 					</li>
 				</ul>
-				<Button variant='secondary'>Location</Button>
+				<input
+					type='text'
+					value={locationInputValue}
+					onChange={handleSearchEvent}
+					placeholder='Search by location...'
+					className={styles.searchInput}
+				/>
 			</div>
 			<div className={styles.btnsContainer}>
 				<div className={styles.leftBtnsContainer}>
@@ -95,7 +132,7 @@ export default function FilterComponent() {
 						variant='secondary'
 						isActive={whichRouteIsActive(location.pathname, 'courts')}
 						to='/app/courts'>
-						Spots
+						Courts
 					</Button>
 					<Button
 						variant='secondary'

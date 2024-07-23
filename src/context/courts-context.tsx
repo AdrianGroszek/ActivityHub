@@ -4,7 +4,7 @@ import { type CourtType, courts as initialCourts } from '../data/courts';
 type StateType = {
 	courts: CourtType[];
 	filteredCourts: CourtType[];
-	// filterCategory: 'Basketabll' | 'Football' | 'Tennis' | 'Volleyball' | 'All';
+	searchedCourts: CourtType[];
 	filterCategory: string;
 	selectedCourt: CourtType | null;
 };
@@ -12,6 +12,7 @@ type StateType = {
 const initialState: StateType = {
 	courts: initialCourts,
 	filteredCourts: initialCourts,
+	searchedCourts: [],
 	filterCategory: 'All',
 	selectedCourt: null,
 };
@@ -20,6 +21,7 @@ type CourtsContextType = StateType & {
 	selectCourt: (court: CourtType) => void;
 	filterCourts: (courtCategory: string) => void;
 	resetSelectedCourt: () => void;
+	searchCourtByLocation: (locationSlug: string) => void;
 };
 
 const CourtsContext = createContext<CourtsContextType | null>(null);
@@ -50,10 +52,16 @@ type ResetSelectedCourtAction = {
 	type: 'RESET_SELECTED_COURT';
 };
 
+type SearchCourtByLocationAction = {
+	type: 'SEARCH_COURT_BY_LOCATION';
+	locationSlug: string;
+};
+
 type Action =
 	| SelectCourtAction
 	| FilterCourtsCategoryAction
-	| ResetSelectedCourtAction;
+	| ResetSelectedCourtAction
+	| SearchCourtByLocationAction;
 
 function courtsReducer(state: StateType, action: Action): StateType {
 	switch (action.type) {
@@ -67,12 +75,16 @@ function courtsReducer(state: StateType, action: Action): StateType {
 					...state,
 					filterCategory: action.courtCategory,
 					filteredCourts: state.courts,
+					searchedCourts: state.courts,
 				};
 			}
 			return {
 				...state,
 				filterCategory: action.courtCategory,
 				filteredCourts: state.courts.filter((court) => {
+					return court.category === action.courtCategory;
+				}),
+				searchedCourts: state.courts.filter((court) => {
 					return court.category === action.courtCategory;
 				}),
 			};
@@ -83,6 +95,15 @@ function courtsReducer(state: StateType, action: Action): StateType {
 				selectedCourt: null,
 				filterCategory: 'All',
 				filteredCourts: state.courts,
+				searchedCourts: state.courts,
+			};
+		}
+		case 'SEARCH_COURT_BY_LOCATION': {
+			return {
+				...state,
+				searchedCourts: state.filteredCourts.filter((event) =>
+					event.location.toLowerCase().includes(action.locationSlug)
+				),
 			};
 		}
 		default:
@@ -100,6 +121,7 @@ export default function CourtsContextProvider({
 		filteredCourts: courtsState.filteredCourts,
 		filterCategory: courtsState.filterCategory,
 		selectedCourt: courtsState.selectedCourt,
+		searchedCourts: courtsState.searchedCourts,
 		selectCourt(court) {
 			dispatch({ type: 'SELECT_COURT', court });
 		},
@@ -108,6 +130,9 @@ export default function CourtsContextProvider({
 		},
 		resetSelectedCourt() {
 			dispatch({ type: 'RESET_SELECTED_COURT' });
+		},
+		searchCourtByLocation(locationSlug) {
+			dispatch({ type: 'SEARCH_COURT_BY_LOCATION', locationSlug });
 		},
 	};
 

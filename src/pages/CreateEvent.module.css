@@ -54,9 +54,6 @@
 	color: var(--color-gray);
 }
 
-.datePickerContainer {
-}
-
 .datePickerContainer input {
 	width: 600px;
 	background-color: var(--color-black-500);
@@ -95,4 +92,17 @@
 	gap: 0.5rem;
 	scale: 1.02;
 	color: var(--color-cyan-light);
+}
+
+.topSelectedCourtView {
+	display: flex;
+	height: 100px;
+}
+
+.topSelectedCourtView img {
+	height: 100%;
+	width: 35%;
+	object-fit: cover;
+	border-radius: 8px;
+	margin-right: 1rem;
 }

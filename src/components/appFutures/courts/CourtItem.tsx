@@ -50,11 +50,11 @@ export default function CourtItem({ court }: CourtItemProps) {
 						</ul>
 						<div>
 							{court.isFree ? (
-								<TagSpan textColor='#1ca366' bgColor='#c5f8e1'>
+								<TagSpan textColor='#cdf7f3' bgColor='rgba(205, 247, 243, 0.1)'>
 									FREE
 								</TagSpan>
 							) : (
-								<TagSpan textColor='#f55050' bgColor='#f5cccc'>
+								<TagSpan textColor='#ffd972' bgColor='rgba(255, 217, 114, 0.1)'>
 									PAID
 								</TagSpan>
 							)}
