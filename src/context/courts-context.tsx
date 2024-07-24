@@ -102,7 +102,9 @@ function courtsReducer(state: StateType, action: Action): StateType {
 			return {
 				...state,
 				searchedCourts: state.filteredCourts.filter((event) =>
-					event.location.toLowerCase().includes(action.locationSlug)
+					event.location
+						.toLowerCase()
+						.includes(action.locationSlug.toLowerCase())
 				),
 			};
 		}

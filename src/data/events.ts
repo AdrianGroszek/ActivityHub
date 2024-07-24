@@ -31,16 +31,6 @@ export type EventType = {
 	level: 'beginner' | 'intermediate' | 'advanced';
 };
 
-export function updateEvent(
-	eventId: string,
-	updatedEventData: Partial<EventType>
-): void {
-	const eventIndex = events.findIndex((event) => event.id === eventId);
-	if (eventIndex !== -1) {
-		events[eventIndex] = { ...events[eventIndex], ...updatedEventData };
-	}
-}
-
 export const events: EventType[] = [
 	{
 		id: '1',

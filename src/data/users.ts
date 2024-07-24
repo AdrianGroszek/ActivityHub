@@ -21,16 +21,6 @@ import ProfileImg19 from '../assets/profile-photo-19.jpg';
 import ProfileImg20 from '../assets/profile-photo-20.jpg';
 import ProfileImg21 from '../assets/profile-photo-21.jpg';
 
-export function updateUser(
-	userId: string,
-	updatedUserData: Partial<UserType>
-): void {
-	const userIndex = users.findIndex((user) => user.id === userId);
-	if (userIndex !== -1) {
-		users[userIndex] = { ...users[userIndex], ...updatedUserData };
-	}
-}
-
 export const users: UserType[] = [
 	{
 		id: '111',

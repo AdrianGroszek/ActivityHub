@@ -6,9 +6,11 @@
 }
 
 .appFilterSectionLeft {
-	height: 100%;
+	display: flex;
+	flex-direction: column;
 	width: 50%;
-	padding: 1rem;
+	padding: 1rem 1rem 0;
+	/* overflow: hidden; */
 }
 
 .appFilterSectionLeft > *:not(:last-child) {
@@ -17,7 +19,6 @@
 
 .appDetailsSectionRight {
 	overflow: hidden;
-	height: 100%;
 	width: 50%;
 	border-radius: 8px;
 	background: var(--color-black-500);
@@ -25,10 +26,10 @@
 
 .mapWrapperFull {
 	height: 100%;
-	transition: height 0.5s ease;
+	/* transition: height 0.5s ease; */
 }
 
 .mapWrapperHalf {
 	height: 45%;
-	transition: height 0.5s ease;
+	/* transition: height 0.5s ease; */
 }

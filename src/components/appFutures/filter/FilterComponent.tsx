@@ -33,12 +33,20 @@ export default function FilterComponent() {
 
 	const [locationInputValue, setLocationInputValue] = useState('');
 
-	//Check if pathname includes 'courts' or 'events'
+	// Check if pathname includes 'courts' or 'events'
 	const urlPathSlug: string = location.pathname.split('/')[2];
 
 	useEffect(() => {
-		resetSelectedEvent();
-		resetSelectedCourt();
+		if (urlPathSlug === 'courts') {
+			resetSelectedEvent();
+		}
+		if (urlPathSlug === 'events') {
+			resetSelectedCourt();
+		}
+		if (urlPathSlug === 'create') {
+			resetSelectedEvent();
+			resetSelectedCourt();
+		}
 		setLocationInputValue('');
 	}, [urlPathSlug]);
 
@@ -65,7 +73,7 @@ export default function FilterComponent() {
 	}, [eventFilterCategory, filterCategory]);
 
 	function handleSearchEvent(event: ChangeEvent<HTMLInputElement>) {
-		setLocationInputValue(event.target.value.toLowerCase());
+		setLocationInputValue(event.target.value);
 	}
 
 	return (

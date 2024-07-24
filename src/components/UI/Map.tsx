@@ -77,7 +77,7 @@ export default function Map() {
 		useEvents();
 	const location = useLocation();
 	const [mapCenter, setMapCenter] = useState<[number, number]>([54.5, 18.6]);
-	const [mapZoom, setMapZoom] = useState<number>(9);
+	const [mapZoom, setMapZoom] = useState<number>(10);
 
 	const urlPathSlug: string = location.pathname.split('/')[2];
 
@@ -92,7 +92,7 @@ export default function Map() {
 	}, [selectedCourt, selectedEvent, location]);
 
 	useEffect(() => {
-		setMapZoom(9);
+		setMapZoom(10);
 		setMapCenter([54.5, 18.6]);
 	}, [filterCategory, eventFilterCategory, urlPathSlug]);
 

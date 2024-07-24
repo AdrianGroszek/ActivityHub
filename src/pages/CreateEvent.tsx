@@ -14,6 +14,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { pl } from 'date-fns/locale';
 import { FaAnglesLeft } from 'react-icons/fa6';
 import TagSpan from '../components/UI/TagSpan';
+import { getHours, getMinutes, setHours, setMinutes } from 'date-fns';
 
 registerLocale('pl', pl);
 
@@ -37,7 +38,17 @@ export default function CreateEvent() {
 	const [minAge, setMinAge] = useState('');
 	const [maxAge, setMaxAge] = useState('');
 	const [playersNumber, setPlayersNumber] = useState('');
-	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+	const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
+	const minTime: Date =
+		selectedDate && selectedDate.toDateString() === new Date().toDateString()
+			? setHours(
+					setMinutes(new Date(), getMinutes(new Date())),
+					getHours(new Date())
+			  )
+			: setHours(setMinutes(new Date(), 0), 0);
+
+	const maxTime: Date = setHours(setMinutes(new Date(), 59), 23);
 
 	function handleCourtSelect(event: ChangeEvent<HTMLSelectElement>) {
 		const tempCourt = courts.find(
@@ -201,12 +212,15 @@ export default function CreateEvent() {
 					<DatePicker
 						selected={selectedDate}
 						onChange={handleSelectDate}
-						dateFormat='MM/dd/yyyy; HH:mm'
+						dateFormat='dd/MM/yyyy; HH:mm'
 						showTimeSelect
 						timeIntervals={30}
 						timeFormat='HH:mm'
 						locale='pl'
 						required
+						minDate={new Date()}
+						minTime={minTime}
+						maxTime={maxTime}
 					/>
 				</div>
 

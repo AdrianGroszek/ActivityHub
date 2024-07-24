@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 import { UserType } from '../data/user';
-import { updateUser } from '../data/users';
 
 type UserLoginContextType = {
 	user: UserType | null;
@@ -40,7 +39,6 @@ export function UserLoginProvider({ children }: UserLoginProviderProps) {
 				joinedEvents: [...user.joinedEvents, eventId],
 			};
 			setUser(updatedUser);
-			updateUser(user.id, { joinedEvents: updatedUser.joinedEvents });
 		}
 	}
 

@@ -12,7 +12,13 @@ export default function PlayerItem({
 	selectedEvent,
 }: PlayerItemProps) {
 	return (
-		<li className={styles.playerItem}>
+		<li
+			className={styles.playerItem}
+			style={{
+				borderColor: singlePlayer.id === '111' ? '#ffd972' : '',
+				backgroundColor:
+					singlePlayer.id === '111' ? 'rgba(255, 217, 114, 0.1)' : '',
+			}}>
 			<img
 				src={singlePlayer.photo}
 				alt='User profile photo'

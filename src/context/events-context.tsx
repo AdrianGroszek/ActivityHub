@@ -1,9 +1,5 @@
 import { createContext, type ReactNode, useContext, useReducer } from 'react';
-import {
-	type EventType,
-	events as initialEvents,
-	updateEvent,
-} from '../data/events';
+import { type EventType, events as initialEvents } from '../data/events';
 
 type StateType = {
 	events: EventType[];
@@ -11,14 +7,16 @@ type StateType = {
 	searchedEvents: EventType[];
 	eventFilterCategory: string;
 	selectedEvent: EventType | null;
+	searchTerm: string;
 };
 
 const initialState: StateType = {
 	events: initialEvents,
 	filteredEvents: initialEvents,
-	searchedEvents: [],
+	searchedEvents: initialEvents,
 	eventFilterCategory: 'All',
 	selectedEvent: null,
+	searchTerm: '',
 };
 
 type EventsContextType = StateType & {
@@ -26,7 +24,7 @@ type EventsContextType = StateType & {
 	filterEvents: (eventCategory: string) => void;
 	resetSelectedEvent: () => void;
 	createEvent: (newEvent: EventType) => void;
-	joinTheEvent: (userId: string) => void;
+	joinTheEvent: (userId: string, eventId: string) => void;
 	searchEventByLocation: (locationSlug: string) => void;
 };
 
@@ -65,7 +63,10 @@ type CreateEventAction = {
 
 type JoinTheEventAction = {
 	type: 'JOIN_THE_EVENT';
-	userId: string;
+	payload: {
+		userId: string;
+		eventId: string;
+	};
 };
 
 type SearchEventByLocationAction = {
@@ -110,41 +111,61 @@ function eventsReducer(state: StateType, action: Action): StateType {
 		case 'RESET_SELECTED_EVENT': {
 			return {
 				...state,
-				// Temporary solution (commenting "selectedEvent") for event not loading error after changing routing from courts to events when selecting event in the CourtDescription.tsx component
-				// selectedEvent: null,
+				selectedEvent: null,
 				eventFilterCategory: 'All',
 				filteredEvents: state.events,
 				searchedEvents: state.events,
+				searchTerm: '',
 			};
 		}
 		case 'CREATE_EVENT': {
 			return {
 				...state,
 				events: [action.newEvent, ...state.events],
+				filteredEvents: [action.newEvent, ...state.events],
+				searchedEvents: [action.newEvent, ...state.events],
 			};
 		}
 		case 'JOIN_THE_EVENT': {
-			if (!state.selectedEvent) return state;
-			const updatedEvent = {
-				...state.selectedEvent,
-				participants: [...state.selectedEvent.participants, action.userId],
-			};
-			updateEvent(state.selectedEvent.id, updatedEvent);
+			const { eventId, userId } = action.payload;
+			const updatedEvents = state.events.map((event) =>
+				event.id === eventId
+					? { ...event, participants: [userId, ...event.participants] }
+					: event
+			);
+			const filtered =
+				state.eventFilterCategory === 'All'
+					? updatedEvents
+					: updatedEvents.filter(
+							(event) => event.category === state.eventFilterCategory
+					  );
+			const updatedSelectedEvent =
+				state.selectedEvent && state.selectedEvent.id === eventId
+					? {
+							...state.selectedEvent,
+							participants: [...state.selectedEvent.participants, userId],
+					  }
+					: state.selectedEvent;
 
 			return {
 				...state,
-				events: state.events.map((event) =>
-					event.id === state.selectedEvent?.id ? updatedEvent : event
+				events: updatedEvents,
+				filteredEvents: filtered,
+				searchedEvents: filtered.filter((event) =>
+					event.location.toLowerCase().includes(state.searchTerm)
 				),
-				selectedEvent: updatedEvent,
+				selectedEvent: updatedSelectedEvent,
 			};
 		}
 		case 'SEARCH_EVENT_BY_LOCATION': {
 			return {
 				...state,
 				searchedEvents: state.filteredEvents.filter((event) =>
-					event.location.toLowerCase().includes(action.locationSlug)
+					event.location
+						.toLowerCase()
+						.includes(action.locationSlug.toLowerCase())
 				),
+				searchTerm: action.locationSlug.toLowerCase(),
 			};
 		}
 		default:
@@ -163,6 +184,7 @@ export default function EventsContextProvider({
 		eventFilterCategory: eventsState.eventFilterCategory,
 		selectedEvent: eventsState.selectedEvent,
 		searchedEvents: eventsState.searchedEvents,
+		searchTerm: eventsState.searchTerm,
 		selectEvent(event) {
 			dispatch({ type: 'SELECT_EVENT', event });
 		},
@@ -175,8 +197,11 @@ export default function EventsContextProvider({
 		createEvent(newEvent) {
 			dispatch({ type: 'CREATE_EVENT', newEvent });
 		},
-		joinTheEvent(userId) {
-			dispatch({ type: 'JOIN_THE_EVENT', userId });
+		joinTheEvent(userId, eventId) {
+			dispatch({
+				type: 'JOIN_THE_EVENT',
+				payload: { userId, eventId },
+			});
 		},
 		searchEventByLocation(locationSlug) {
 			dispatch({ type: 'SEARCH_EVENT_BY_LOCATION', locationSlug });

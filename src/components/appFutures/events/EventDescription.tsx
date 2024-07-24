@@ -11,26 +11,34 @@ import { FaPersonRunning } from 'react-icons/fa6';
 import { FaChartLine } from 'react-icons/fa6';
 import PlayersList from './PlayersList';
 import { useUserLogin } from '../../../context/user-login-context';
+import { EventType } from '../../../data/events';
+import { useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 export default function EventDescription() {
-	const { selectedEvent, joinTheEvent } = useEvents();
+	const { events, joinTheEvent } = useEvents();
 	const { user, updateJoinedEvents } = useUserLogin();
+	const { eventId } = useParams();
+
+	const selectedEvent: EventType | undefined = events.find(
+		(event) => event.id === eventId
+	);
 
 	if (!selectedEvent) return;
 
 	function handleJoinTheEvent() {
 		if (!selectedEvent || !user) return;
 		if (selectedEvent?.participants.includes(user.id)) {
-			alert('You have already joined the event');
+			toast.error('You already joined to this event.');
 			return;
 		}
 		if (selectedEvent.minAge > user.age || selectedEvent.maxAge < user.age) {
-			alert('TOAST age invalid');
+			toast.error('Your age does not fit into the range.');
 			return;
 		}
-		// alert('toast');
+		toast.success(`You've joined. Have fun! :)`);
 		updateJoinedEvents(selectedEvent.id);
-		joinTheEvent(user.id);
+		joinTheEvent(user.id, selectedEvent.id);
 	}
 
 	return (
