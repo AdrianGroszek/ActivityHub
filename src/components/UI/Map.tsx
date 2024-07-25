@@ -173,8 +173,7 @@ export default function Map() {
 									<p>{event.location}</p>
 									<p>Sport: {event.category}</p>
 									<p>
-										Players: {event.participants.length} /{' '}
-										{selectedEvent?.playerCount}
+										Players: {event.participants.length} / {event.playerCount}
 									</p>
 									<p className={event.isFree ? styles.free : styles.paid}>
 										{event.isFree ? 'Free to use' : 'Paid'}

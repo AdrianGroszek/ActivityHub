@@ -1,11 +1,19 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
-import { UserType } from '../data/user';
+import {
+	createContext,
+	useContext,
+	useEffect,
+	useState,
+	type ReactNode,
+} from 'react';
+import { type UserType } from '../data/user';
+import { users } from '../data/users';
 
 type UserLoginContextType = {
 	user: UserType | null;
 	login: (user: UserType) => void;
 	logout: () => void;
 	updateJoinedEvents: (eventId: string) => void;
+	updateCreatedEvents: (eventId: string) => void;
 };
 
 const UserLoginContext = createContext<UserLoginContextType | null>(null);
@@ -32,6 +40,13 @@ export function UserLoginProvider({ children }: UserLoginProviderProps) {
 		setUser(null);
 	}
 
+	function updateUsersList(updatedUser: UserType) {
+		const userIndex = users.findIndex((user) => user.id === updatedUser.id);
+		if (userIndex !== -1) {
+			users[userIndex] = updatedUser;
+		}
+	}
+
 	function updateJoinedEvents(eventId: string) {
 		if (user) {
 			const updatedUser = {
@@ -39,12 +54,31 @@ export function UserLoginProvider({ children }: UserLoginProviderProps) {
 				joinedEvents: [...user.joinedEvents, eventId],
 			};
 			setUser(updatedUser);
+			updateUsersList(updatedUser);
 		}
 	}
 
+	function updateCreatedEvents(eventId: string) {
+		if (user) {
+			const updatedUser = {
+				...user,
+				joinedEvents: [...user.joinedEvents, eventId],
+				createdEvents: [...user.createdEvents, eventId],
+			};
+			setUser(updatedUser);
+			updateUsersList(updatedUser);
+		}
+	}
+
+	useEffect(() => {
+		if (user) {
+			updateUsersList(user);
+		}
+	}, [user]);
+
 	return (
 		<UserLoginContext.Provider
-			value={{ user, login, logout, updateJoinedEvents }}>
+			value={{ user, login, logout, updateJoinedEvents, updateCreatedEvents }}>
 			{children}
 		</UserLoginContext.Provider>
 	);

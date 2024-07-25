@@ -8,6 +8,8 @@ import { FaLocationDot, FaUsers } from 'react-icons/fa6';
 import { useCourts } from '../../../context/courts-context';
 import { formatEventTime } from '../../../helpers';
 import TagSpan from '../../UI/TagSpan';
+import { useEffect, useState } from 'react';
+import { useUserLogin } from '../../../context/user-login-context';
 
 type EventItemProp = {
 	event: EventType;
@@ -16,8 +18,19 @@ type EventItemProp = {
 export default function EventItem({ event }: EventItemProp) {
 	const { selectEvent } = useEvents();
 	const { courts } = useCourts();
-	const { eventId } = useParams<{ eventId: string }>();
+	const { eventId } = useParams();
+	const { user } = useUserLogin();
 	const location = useLocation();
+
+	const [isUserJoined, setIsUserJoined] = useState(false);
+
+	useEffect(() => {
+		if (event.participants.includes(user!.id)) {
+			setIsUserJoined(true);
+		} else {
+			setIsUserJoined(false);
+		}
+	}, [event]);
 
 	const selectedStyle: string =
 		eventId === event.id ? styles.activeCourtItem : '';
@@ -68,7 +81,12 @@ export default function EventItem({ event }: EventItemProp) {
 								<span>{event.location}</span>
 							</li>
 						</ul>
-						<div>
+						<div className={styles.tagspansContainer}>
+							{isUserJoined && (
+								<TagSpan textColor='#03d8c3' bgColor='rgba(3, 216, 195, 0.1)'>
+									JOINED
+								</TagSpan>
+							)}
 							{event.isFree ? (
 								<TagSpan textColor='#cdf7f3' bgColor='rgba(205, 247, 243, 0.1)'>
 									FREE

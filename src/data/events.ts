@@ -194,7 +194,7 @@ export const events: EventType[] = [
 		minAge: 18,
 		maxAge: 28,
 		location: 'Gdynia, Dulina Aleksandra 12',
-		coordinates: [54.45, 18.5],
+		coordinates: [54.7, 18.3],
 		courtId: 'FF2',
 		photo: FootballPitch2,
 		playerCount: 22,

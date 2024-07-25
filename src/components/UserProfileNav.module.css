@@ -32,3 +32,15 @@
 	opacity: 0.8;
 	border-color: var(--color-gray);
 }
+
+.profileBtn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	transition: all 0.3s;
+}
+
+.profileBtn:hover {
+	color: var(--color-cyan-light);
+}

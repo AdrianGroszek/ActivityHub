@@ -25,7 +25,7 @@ export default function CreateEvent() {
 	const navigate = useNavigate();
 
 	const { courts } = useCourts();
-	const { user } = useUserLogin();
+	const { user, updateCreatedEvents } = useUserLogin();
 	const { createEvent } = useEvents();
 
 	const [selectedCourt, setSelectedCourt] = useState<CourtType | undefined>(
@@ -38,7 +38,12 @@ export default function CreateEvent() {
 	const [minAge, setMinAge] = useState('');
 	const [maxAge, setMaxAge] = useState('');
 	const [playersNumber, setPlayersNumber] = useState('');
-	const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+	const [selectedDate, setSelectedDate] = useState<Date | null>(
+		setMinutes(
+			new Date(),
+			getMinutes(new Date()) < 30 && getMinutes(new Date()) > 0 ? 30 : 0
+		)
+	);
 
 	const minTime: Date =
 		selectedDate && selectedDate.toDateString() === new Date().toDateString()
@@ -86,7 +91,7 @@ export default function CreateEvent() {
 		};
 
 		createEvent(newEvent);
-		console.log(newEvent);
+		updateCreatedEvents(newEvent.id);
 		navigate('/app/events');
 	}
 

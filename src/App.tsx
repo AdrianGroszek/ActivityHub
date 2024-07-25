@@ -7,6 +7,7 @@ import AppPage from './pages/AppPage';
 import CourtDescription from './components/appFutures/courts/CourtDescription';
 import EventDescription from './components/appFutures/events/EventDescription';
 import ProtectedRoute from './ProtectedRoute';
+import UserPage from './pages/UserPage';
 
 const Router = createBrowserRouter([
 	{
@@ -48,6 +49,10 @@ const Router = createBrowserRouter([
 			{
 				path: 'app/create',
 				element: <ProtectedRoute element={<AppPage />} />,
+			},
+			{
+				path: 'app/user',
+				element: <ProtectedRoute element={<UserPage />} />,
 			},
 		],
 	},

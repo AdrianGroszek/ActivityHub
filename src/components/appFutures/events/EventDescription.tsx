@@ -28,7 +28,11 @@ export default function EventDescription() {
 
 	function handleJoinTheEvent() {
 		if (!selectedEvent || !user) return;
-		if (selectedEvent?.participants.includes(user.id)) {
+		if (selectedEvent.participants.length === selectedEvent.playerCount) {
+			toast.error('This event is full, please select another event.');
+			return;
+		}
+		if (selectedEvent.participants.includes(user.id)) {
 			toast.error('You already joined to this event.');
 			return;
 		}
@@ -114,6 +118,7 @@ export default function EventDescription() {
 							{selectedEvent.level}
 						</p>
 					</div>
+
 					<button className={styles.joinBtn} onClick={handleJoinTheEvent}>
 						Join
 					</button>

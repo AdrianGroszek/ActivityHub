@@ -92,3 +92,8 @@
 	font-weight: normal;
 	color: var(--color-gray);
 }
+
+.tagspansContainer {
+	display: flex;
+	gap: 0.5rem;
+}
