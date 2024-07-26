@@ -7,12 +7,12 @@ import EventsList from '../events/EventsList';
 import { useEvents } from '../../../context/events-context';
 
 export default function CourtsComponent() {
-	const { filteredCourts, filterCategory } = useCourts();
-	const { filteredEvents, eventFilterCategory } = useEvents();
+	const { searchedCourts, filterCategory } = useCourts();
+	const { searchedEvents, eventFilterCategory } = useEvents();
 	const location = useLocation();
 
-	const sumOfCourts: number = filteredCourts.length;
-	const sumOfEvents: number = filteredEvents.length;
+	const sumOfCourts: number = searchedCourts.length;
+	const sumOfEvents: number = searchedEvents.length;
 
 	if (location.pathname.includes('courts')) {
 		return (

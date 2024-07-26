@@ -49,3 +49,11 @@
 		left: calc(100px * -1);
 	}
 }
+
+/* MEDIA */
+
+@media screen and (max-width: 940px) {
+	.slider {
+		display: none;
+	}
+}

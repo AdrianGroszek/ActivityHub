@@ -69,3 +69,27 @@
 .noEventsInfo p {
 	color: var(--color-gray);
 }
+
+.eventItemContainer {
+	position: relative;
+}
+
+.eventItemContainer button {
+	position: absolute;
+	top: 21px;
+	right: -29px;
+	padding: 0.25rem;
+	outline: none;
+	background-color: inherit;
+	color: #ee6055;
+}
+
+.eventItemContainer button .trashIcon {
+	height: 20px;
+	width: 20px;
+	transition: all 0.2s;
+}
+
+.eventItemContainer button:hover .trashIcon {
+	color: #db4136;
+}

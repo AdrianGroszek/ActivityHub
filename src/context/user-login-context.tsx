@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { type UserType } from '../data/user';
 import { users } from '../data/users';
+import { useLocation } from 'react-router-dom';
 
 type UserLoginContextType = {
 	user: UserType | null;
@@ -14,6 +15,9 @@ type UserLoginContextType = {
 	logout: () => void;
 	updateJoinedEvents: (eventId: string) => void;
 	updateCreatedEvents: (eventId: string) => void;
+	userLoginPathname: () => void;
+	updateLeaveEvent: (eventId: string) => void;
+	updateDeleteEvent: (eventId: string) => void;
 };
 
 const UserLoginContext = createContext<UserLoginContextType | null>(null);
@@ -32,6 +36,7 @@ export function useUserLogin() {
 
 export function UserLoginProvider({ children }: UserLoginProviderProps) {
 	const [user, setUser] = useState<UserType | null>(null);
+	const location = useLocation();
 
 	function login(user: UserType) {
 		setUser(user);
@@ -70,15 +75,57 @@ export function UserLoginProvider({ children }: UserLoginProviderProps) {
 		}
 	}
 
+	function updateLeaveEvent(eventId: string) {
+		if (user) {
+			const updatedUser = {
+				...user,
+				joinedEvents: user.joinedEvents.filter((id) => id !== eventId),
+			};
+			setUser(updatedUser);
+			updateUsersList(updatedUser);
+		}
+	}
+
+	function updateDeleteEvent(eventId: string) {
+		if (user) {
+			const updatedUser = {
+				...user,
+				createdEvevents: user.createdEvents.filter((id) => id !== eventId),
+				joinedEvents: user.joinedEvents.filter((id) => id !== eventId),
+			};
+			setUser(updatedUser);
+			updateUsersList(updatedUser);
+		}
+	}
+
+	function userLoginPathname() {
+		if (!location.pathname.includes('app')) {
+			logout();
+		}
+	}
+
 	useEffect(() => {
 		if (user) {
 			updateUsersList(user);
 		}
 	}, [user]);
 
+	useEffect(() => {
+		userLoginPathname();
+	}, [location.pathname]);
+
 	return (
 		<UserLoginContext.Provider
-			value={{ user, login, logout, updateJoinedEvents, updateCreatedEvents }}>
+			value={{
+				user,
+				login,
+				logout,
+				updateJoinedEvents,
+				updateCreatedEvents,
+				userLoginPathname,
+				updateLeaveEvent,
+				updateDeleteEvent,
+			}}>
 			{children}
 		</UserLoginContext.Provider>
 	);

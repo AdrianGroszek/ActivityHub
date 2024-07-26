@@ -26,6 +26,8 @@ type EventsContextType = StateType & {
 	createEvent: (newEvent: EventType) => void;
 	joinTheEvent: (userId: string, eventId: string) => void;
 	searchEventByLocation: (locationSlug: string) => void;
+	leaveTheEvent: (userId: string, eventId: string) => void;
+	deleteEvent: (eventId: string) => void;
 };
 
 const EventsContext = createContext<EventsContextType | null>(null);
@@ -74,13 +76,28 @@ type SearchEventByLocationAction = {
 	locationSlug: string;
 };
 
+type LeaveTheEventAction = {
+	type: 'LEAVE_THE_EVENT';
+	payload: {
+		userId: string;
+		eventId: string;
+	};
+};
+
+type DeleteEventAction = {
+	type: 'DELETE_EVENT';
+	eventId: string;
+};
+
 type Action =
 	| SelectEventAction
 	| FilterEventsCategoryAction
 	| ResetSelectedEventAction
 	| CreateEventAction
 	| JoinTheEventAction
-	| SearchEventByLocationAction;
+	| SearchEventByLocationAction
+	| LeaveTheEventAction
+	| DeleteEventAction;
 
 function eventsReducer(state: StateType, action: Action): StateType {
 	switch (action.type) {
@@ -157,6 +174,67 @@ function eventsReducer(state: StateType, action: Action): StateType {
 				selectedEvent: updatedSelectedEvent,
 			};
 		}
+		case 'LEAVE_THE_EVENT': {
+			const { eventId, userId } = action.payload;
+			const updatedEvents = state.events.map((event) =>
+				event.id === eventId
+					? {
+							...event,
+							participants: event.participants.filter((id) => id !== userId),
+					  }
+					: event
+			);
+			const filtered =
+				state.eventFilterCategory === 'All'
+					? updatedEvents
+					: updatedEvents.filter(
+							(event) => event.category === state.eventFilterCategory
+					  );
+			const updatedSelectedEvent =
+				state.selectedEvent && state.selectedEvent.id === eventId
+					? {
+							...state.selectedEvent,
+							participants: state.selectedEvent.participants.filter(
+								(id) => id !== userId
+							),
+					  }
+					: state.selectedEvent;
+
+			return {
+				...state,
+				events: updatedEvents,
+				filteredEvents: filtered,
+				searchedEvents: filtered.filter((event) =>
+					event.location.toLowerCase().includes(state.searchTerm)
+				),
+				selectedEvent: updatedSelectedEvent,
+			};
+		}
+		case 'DELETE_EVENT': {
+			const updatedEvents = state.events.filter(
+				(event) => event.id !== action.eventId
+			);
+
+			const filtered =
+				state.eventFilterCategory === 'All'
+					? updatedEvents
+					: updatedEvents.filter(
+							(event) => event.category === state.eventFilterCategory
+					  );
+			const updatedSelectedEvent =
+				state.selectedEvent && state.selectedEvent.id === action.eventId
+					? null
+					: state.selectedEvent;
+			return {
+				...state,
+				events: updatedEvents,
+				filteredEvents: filtered,
+				searchedEvents: filtered.filter((event) =>
+					event.location.toLowerCase().includes(state.searchTerm)
+				),
+				selectedEvent: updatedSelectedEvent,
+			};
+		}
 		case 'SEARCH_EVENT_BY_LOCATION': {
 			return {
 				...state,
@@ -205,6 +283,12 @@ export default function EventsContextProvider({
 		},
 		searchEventByLocation(locationSlug) {
 			dispatch({ type: 'SEARCH_EVENT_BY_LOCATION', locationSlug });
+		},
+		leaveTheEvent(userId, eventId) {
+			dispatch({ type: 'LEAVE_THE_EVENT', payload: { userId, eventId } });
+		},
+		deleteEvent(eventId) {
+			dispatch({ type: 'DELETE_EVENT', eventId });
 		},
 	};
 

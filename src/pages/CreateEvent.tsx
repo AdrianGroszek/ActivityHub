@@ -26,7 +26,7 @@ export default function CreateEvent() {
 
 	const { courts } = useCourts();
 	const { user, updateCreatedEvents } = useUserLogin();
-	const { createEvent } = useEvents();
+	const { createEvent, selectEvent } = useEvents();
 
 	const [selectedCourt, setSelectedCourt] = useState<CourtType | undefined>(
 		undefined
@@ -92,7 +92,8 @@ export default function CreateEvent() {
 
 		createEvent(newEvent);
 		updateCreatedEvents(newEvent.id);
-		navigate('/app/events');
+		selectEvent(newEvent);
+		navigate(`/app/events/${newEvent.id}`);
 	}
 
 	return (

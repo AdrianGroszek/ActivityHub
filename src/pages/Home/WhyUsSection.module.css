@@ -69,3 +69,14 @@
 	color: var(--color-gray);
 	line-height: 1.25rem;
 }
+
+/* MEDIA */
+@media screen and (max-width: 650px) {
+	.wrapper h3 {
+		font-size: 2rem;
+		margin-bottom: 2rem;
+	}
+	.listItemContaine {
+		gap: 1.25rem;
+	}
+}

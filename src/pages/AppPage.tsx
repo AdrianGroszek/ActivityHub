@@ -78,13 +78,3 @@ export default function AppPage() {
 		</Wrapper>
 	);
 }
-
-{
-	/* <div
-						className={
-							isSelected ? styles.mapWrapperHalf : styles.mapWrapperFull
-						}>
-						<Map />
-						<Outlet />
-					</div> */
-}

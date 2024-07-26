@@ -16,7 +16,7 @@ type EventItemProp = {
 };
 
 export default function EventItem({ event }: EventItemProp) {
-	const { selectEvent } = useEvents();
+	const { selectEvent, selectedEvent } = useEvents();
 	const { courts } = useCourts();
 	const { eventId } = useParams();
 	const { user } = useUserLogin();
@@ -33,18 +33,18 @@ export default function EventItem({ event }: EventItemProp) {
 	}, [event]);
 
 	const selectedStyle: string =
-		eventId === event.id ? styles.activeCourtItem : '';
+		selectedEvent && eventId === event.id ? styles.activeCourtItem : '';
 
-	//Find court which match with current event courtId
 	const eventCourt = courts.find((court) => court.id === event.courtId);
 
 	function handleClick() {
 		selectEvent(event);
 	}
 
-	const chooseRoute: string = location.pathname.includes('courts')
-		? `/app/events/${event.id}`
-		: event.id;
+	const chooseRoute: string =
+		location.pathname.includes('courts') || location.pathname.includes('user')
+			? `/app/events/${event.id}`
+			: event.id;
 
 	return (
 		<li>

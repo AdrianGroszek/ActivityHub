@@ -66,18 +66,18 @@ export default function ReviewSlider() {
 	const [listItemPosition, setListItemPositon] = useState<number>(0);
 
 	function handleNext() {
-		if (listItemPosition === 3200) {
+		if (listItemPosition === 400) {
 			setListItemPositon(0);
 		} else {
-			setListItemPositon((curItem) => curItem + 800);
+			setListItemPositon((curItem) => curItem + 100);
 		}
 	}
 
 	function handlePrev() {
 		if (listItemPosition === 0) {
-			setListItemPositon(3200);
+			setListItemPositon(400);
 		} else {
-			setListItemPositon((curItem) => curItem - 800);
+			setListItemPositon((curItem) => curItem - 100);
 		}
 	}
 
@@ -88,7 +88,7 @@ export default function ReviewSlider() {
 					<li
 						key={index}
 						className={styles.slideItem}
-						style={{ right: `${listItemPosition}px` }}>
+						style={{ right: `${listItemPosition}%` }}>
 						<ReviewItem item={item} key={index} />
 					</li>
 				))}

@@ -16,8 +16,9 @@ import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 export default function EventDescription() {
-	const { events, joinTheEvent } = useEvents();
-	const { user, updateJoinedEvents } = useUserLogin();
+	const { events, joinTheEvent, leaveTheEvent, deleteEvent } = useEvents();
+	const { user, updateJoinedEvents, updateLeaveEvent, updateDeleteEvent } =
+		useUserLogin();
 	const { eventId } = useParams();
 
 	const selectedEvent: EventType | undefined = events.find(
@@ -43,6 +44,18 @@ export default function EventDescription() {
 		toast.success(`You've joined. Have fun! :)`);
 		updateJoinedEvents(selectedEvent.id);
 		joinTheEvent(user.id, selectedEvent.id);
+	}
+
+	function handleLeaveTheEvent() {
+		if (!selectedEvent || !user) return;
+		toast.success('You left the event');
+		updateLeaveEvent(selectedEvent.id);
+		if (user.createdEvents.includes(selectedEvent.id)) {
+			toast.success('Successfully deleted event');
+			deleteEvent(selectedEvent.id);
+			updateDeleteEvent(selectedEvent.id);
+		}
+		leaveTheEvent(user.id, selectedEvent.id);
 	}
 
 	return (
@@ -119,9 +132,17 @@ export default function EventDescription() {
 						</p>
 					</div>
 
-					<button className={styles.joinBtn} onClick={handleJoinTheEvent}>
-						Join
-					</button>
+					{selectedEvent!.participants.includes(user!.id) ? (
+						<button className={styles.leaveBtn} onClick={handleLeaveTheEvent}>
+							{user?.createdEvents.includes(selectedEvent.id)
+								? 'Leave and Delete'
+								: 'Leave'}
+						</button>
+					) : (
+						<button className={styles.joinBtn} onClick={handleJoinTheEvent}>
+							Join
+						</button>
+					)}
 				</div>
 			</div>
 		</section>

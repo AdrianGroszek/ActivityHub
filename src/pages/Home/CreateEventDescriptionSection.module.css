@@ -11,7 +11,7 @@
 }
 
 .createInfoContainer {
-	width: 40%;
+	width: 50%;
 }
 
 .createInfoContainer h3 {
@@ -43,4 +43,23 @@
 
 .listItem p span {
 	font-weight: bold;
+}
+
+@media screen and (max-width: 950px) {
+	.createImgContainer {
+		display: none;
+	}
+	.createInfoContainer {
+		width: 80%;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.createInfoContainer h3 {
+		font-size: 1.75rem;
+	}
+	.listItem .star {
+		width: 20px;
+		height: 20px;
+	}
 }

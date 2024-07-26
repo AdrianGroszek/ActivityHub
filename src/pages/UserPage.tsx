@@ -8,10 +8,14 @@ import EventItem from '../components/appFutures/events/EventItem';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaAnglesLeft } from 'react-icons/fa6';
 import Button from '../components/UI/Button';
+import { FaTrashCan } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
+import { FaDoorOpen } from 'react-icons/fa6';
 
 export default function UserPage() {
-	const { user } = useUserLogin();
-	const { events } = useEvents();
+	const { user, updateLeaveEvent, updateDeleteEvent } = useUserLogin();
+	const { events, leaveTheEvent, deleteEvent, resetSelectedEvent } =
+		useEvents();
 	const navigate = useNavigate();
 
 	const [userJoinedEvents, setUserJoinedEvents] = useState<EventType[]>([]);
@@ -34,9 +38,22 @@ export default function UserPage() {
 		setUserJoinedEvents(joinedEventsObj);
 	}
 
+	function handleLeaveTheEvent(userId: string, eventId: string): void {
+		toast.success('You left the event');
+		updateLeaveEvent(eventId);
+		leaveTheEvent(userId, eventId);
+	}
+
+	function handleDeleteTheEvent(userId: string, eventId: string): void {
+		toast.success('Successfully deleted event');
+		deleteEvent(eventId);
+		updateDeleteEvent(eventId);
+		leaveTheEvent(userId, eventId);
+	}
+
 	useEffect(() => {
 		getUserJoinedEvents();
-	}, []);
+	}, [user?.createdEvents, user?.joinedEvents]);
 
 	return (
 		<Wrapper>
@@ -45,7 +62,7 @@ export default function UserPage() {
 					<FaAnglesLeft />
 					Back
 				</Link>
-				<h3>Your Profile info</h3>
+				<h3>Hi, {user?.firstName}</h3>
 				<div className={styles.userInfoContainer}>
 					<img
 						src={user?.photo}
@@ -69,7 +86,10 @@ export default function UserPage() {
 				{userJoinedEvents.length === 0 && userCreatedEvents.length === 0 ? (
 					<div className={styles.noEventsInfo}>
 						<p>You don't have any active events yet</p>
-						<Button to='/app/events' variant='primary'>
+						<Button
+							to='/app/events'
+							variant='primary'
+							onClick={resetSelectedEvent}>
 							Go to Events List
 						</Button>
 					</div>
@@ -79,7 +99,13 @@ export default function UserPage() {
 							<p className={styles.eventsHeadingText}>Your created events</p>
 							<ul className={styles.eventsList}>
 								{userCreatedEvents.map((event) => (
-									<EventItem event={event} key={event.id} />
+									<div className={styles.eventItemContainer} key={event.id}>
+										<EventItem event={event} />
+										<button
+											onClick={() => handleDeleteTheEvent(user!.id, event.id)}>
+											<FaTrashCan className={styles.trashIcon} />
+										</button>
+									</div>
 								))}
 							</ul>
 						</div>
@@ -87,7 +113,13 @@ export default function UserPage() {
 							<p className={styles.eventsHeadingText}>Your joined events</p>
 							<ul className={styles.eventsList}>
 								{userJoinedEvents.map((event) => (
-									<EventItem event={event} key={event.id} />
+									<div className={styles.eventItemContainer} key={event.id}>
+										<EventItem event={event} />
+										<button
+											onClick={() => handleLeaveTheEvent(user!.id, event.id)}>
+											<FaDoorOpen className={styles.trashIcon} />
+										</button>
+									</div>
 								))}
 							</ul>
 						</div>

@@ -46,3 +46,14 @@
 	flex-direction: column;
 	width: 100%;
 }
+
+/* MEDIA */
+@media screen and (max-width: 700px) {
+	.accordionHeadingContainer h3 {
+		font-size: 1rem;
+	}
+	.accordionIcon {
+		width: 25px;
+		height: 25px;
+	}
+}

@@ -8,7 +8,7 @@ export default function UserProfileNav() {
 		<div className={styles.userProfileContainer}>
 			<Link to='/app/user' className={styles.profileBtn}>
 				<img src={user?.photo} alt='user profile picture' />
-				<p>Hi, {user?.firstName}</p>
+				<p>{user?.firstName}</p>
 			</Link>
 
 			<Link to='/' onClick={logout} className={styles.logoutBtn}>

@@ -44,3 +44,11 @@
 .mediaContainer div:hover .icon {
 	color: var(--color-cyan-light);
 }
+
+/* MEDIA */
+@media screen and (max-width: 475px) {
+	.mediaContainer div {
+		width: 60px;
+		height: 60px;
+	}
+}

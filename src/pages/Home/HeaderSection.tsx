@@ -22,7 +22,7 @@ export default function HeaderSection() {
 					application brings together sports lovers from all walks of life,
 					allowing you to create and join sports events effortlessly.
 				</p>
-				<div>
+				<div className={styles.headerBtnContainer}>
 					<Button
 						to='/app/courts'
 						onClick={() => login(users[0])}

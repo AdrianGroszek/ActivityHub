@@ -15,3 +15,17 @@
 	text-align: center;
 	color: var(--color-gray);
 }
+
+/* MEDIA */
+
+@media screen and (max-width: 700px) {
+	.headerContainer h2 {
+		font-size: 1.75rem;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.headerContainer h2 {
+		font-size: 1.25rem;
+	}
+}
