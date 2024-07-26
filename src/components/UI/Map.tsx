@@ -13,6 +13,8 @@ import { useCourts } from '../../context/courts-context';
 import { useEffect, useState } from 'react';
 import { useEvents } from '../../context/events-context';
 
+const mapApiKey = import.meta.env.MAP_API_KEY;
+
 type lIconType = {
 	iconUrl: string;
 	iconSize: [number, number];
@@ -105,7 +107,7 @@ export default function Map() {
 				key={`${mapCenter[0]}-${mapCenter[1]}`}
 				style={{ height: '100%', width: '100%' }}>
 				<TileLayer
-					url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+					url={`https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=${mapApiKey}`}
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				/>
 
@@ -153,7 +155,7 @@ export default function Map() {
 				key={`${mapCenter[0]}-${mapCenter[1]}`}
 				style={{ height: '100%', width: '100%' }}>
 				<TileLayer
-					url='https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+					url={`https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=${mapApiKey}`}
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 				/>
 				{filteredEvents.map((event) => (
