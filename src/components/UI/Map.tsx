@@ -14,7 +14,6 @@ import { useEffect, useState } from 'react';
 import { useEvents } from '../../context/events-context';
 
 const mapApiKey = import.meta.env.VITE_MAP_API_KEY;
-console.log(mapApiKey);
 
 type lIconType = {
 	iconUrl: string;
