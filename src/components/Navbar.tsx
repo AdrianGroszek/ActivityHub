@@ -116,18 +116,32 @@ export default function Navbar() {
 						</li>
 					</ul>
 					<div className={styles.mobileBtnContainer}>
-						<Button
-							variant='secondary'
-							onClick={() => toast(`This is dummy button, click 'Login'`)}>
-							Sing Up
-						</Button>
-						<Button
-							style={{ textAlign: 'center' }}
-							to='/app/courts'
-							onClick={() => login(users[0])}
-							variant='primary'>
-							Login
-						</Button>
+						{!user ? (
+							<>
+								<Button
+									variant='secondary'
+									onClick={() => toast(`This is dummy button, click 'Login'`)}>
+									Sing Up
+								</Button>
+								<Button
+									style={{ textAlign: 'center' }}
+									to='/app/courts'
+									onClick={() => login(users[0])}
+									variant='primary'>
+									Login
+								</Button>
+							</>
+						) : (
+							<>
+								<Button variant='secondary' to='/app/courts'>
+									Courts
+								</Button>
+								<Button variant='secondary' to='/app/events'>
+									Events
+								</Button>
+								<UserProfileNav />
+							</>
+						)}
 					</div>
 				</div>
 			</nav>

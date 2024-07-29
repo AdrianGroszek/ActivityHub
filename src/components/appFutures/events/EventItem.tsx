@@ -10,6 +10,7 @@ import { formatEventTime } from '../../../helpers';
 import TagSpan from '../../UI/TagSpan';
 import { useEffect, useState } from 'react';
 import { useUserLogin } from '../../../context/user-login-context';
+import EventDescription from './EventDescription';
 
 type EventItemProp = {
 	event: EventType;
@@ -100,6 +101,11 @@ export default function EventItem({ event }: EventItemProp) {
 					</div>
 				</div>
 			</Link>
+			{event.id === selectedEvent?.id && (
+				<div className={styles.showMobileEventDescription}>
+					<EventDescription />
+				</div>
+			)}
 		</li>
 	);
 }

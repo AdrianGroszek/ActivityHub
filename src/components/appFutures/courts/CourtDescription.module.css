@@ -1,4 +1,5 @@
 .sectionContainer {
+	height: 120%;
 	overflow-y: scroll;
 }
 
@@ -132,5 +133,13 @@
 	}
 	100% {
 		opacity: 1;
+	}
+}
+
+/* MEDIA */
+
+@media screen and (max-width: 1315px) {
+	.courtDetailsList {
+		flex-direction: column;
 	}
 }

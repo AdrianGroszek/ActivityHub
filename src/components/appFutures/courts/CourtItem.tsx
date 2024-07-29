@@ -6,13 +6,14 @@ import { type CourtType } from '../../../data/courts';
 import { Link, useParams } from 'react-router-dom';
 import { useCourts } from '../../../context/courts-context';
 import TagSpan from '../../UI/TagSpan';
+import CourtDescription from './CourtDescription';
 
 type CourtItemProps = {
 	court: CourtType;
 };
 
 export default function CourtItem({ court }: CourtItemProps) {
-	const { selectCourt } = useCourts();
+	const { selectCourt, selectedCourt } = useCourts();
 	const { courtId } = useParams<{ courtId: string }>();
 
 	const selectedStyle: string =
@@ -62,6 +63,11 @@ export default function CourtItem({ court }: CourtItemProps) {
 					</div>
 				</div>
 			</Link>
+			{court.id === selectedCourt?.id && (
+				<div className={styles.showMobileEventDescription}>
+					<CourtDescription />
+				</div>
+			)}
 		</li>
 	);
 }

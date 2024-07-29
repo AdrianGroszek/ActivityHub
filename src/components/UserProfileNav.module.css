@@ -1,7 +1,8 @@
 .userProfileContainer {
 	display: flex;
 	align-items: center;
-	height: 42px;
+	justify-content: space-between;
+	min-height: 42px;
 
 	/* border: 1px solid red; */
 	background-color: var(--color-black-500);
@@ -43,4 +44,14 @@
 
 .profileBtn:hover {
 	color: var(--color-cyan-light);
+}
+
+/* MEDIA */
+@media screen and (max-width: 520px) {
+	.userProfileContainer {
+		flex-direction: column;
+		justify-content: space-around;
+		height: 110px;
+		padding: 1rem;
+	}
 }

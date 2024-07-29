@@ -8,7 +8,7 @@ type ProtectedRouteProps = {
 
 export default function ProtectedRoute({ element }: ProtectedRouteProps) {
 	const { user } = useUserLogin();
-	if (!user) return <Navigate to='/' />;
+	if (!user) return <Navigate to='/help' />;
 
 	return <>{element}</>;
 }

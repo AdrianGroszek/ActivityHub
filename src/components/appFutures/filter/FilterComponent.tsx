@@ -151,7 +151,7 @@ export default function FilterComponent() {
 				</div>
 				<div>
 					<Button to='/app/create' variant='secondary'>
-						Create Event
+						Create+
 					</Button>
 				</div>
 			</div>

@@ -21,6 +21,11 @@
 	align-items: center;
 }
 
+.leftBtnsContainer {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
 .leftBtnsContainer > *:first-child {
 	margin-right: 0.5rem;
 }
@@ -36,4 +41,27 @@
 
 .searchInput:focus {
 	background-color: var(--color-black-200);
+}
+
+/* MEDIA */
+
+@media screen and (max-width: 530px) {
+	.filterContainer {
+		flex-direction: column;
+		align-items: start;
+	}
+
+	.circleIconsContainer {
+		margin-bottom: 1rem;
+		gap: 0.5rem;
+	}
+
+	.searchInput {
+		width: 100%;
+	}
+
+	/* .btnsContainer {
+		min-width: 465px;
+		overflow-x: scroll;
+	} */
 }

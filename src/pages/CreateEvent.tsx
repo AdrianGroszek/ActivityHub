@@ -215,6 +215,7 @@ export default function CreateEvent() {
 				/>
 				<div className={styles.datePickerContainer}>
 					<span className={styles.selectLabel}>Select date</span>
+
 					<DatePicker
 						selected={selectedDate}
 						onChange={handleSelectDate}

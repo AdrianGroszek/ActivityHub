@@ -33,3 +33,29 @@
 	height: 45%;
 	/* transition: height 0.5s ease; */
 }
+
+/* MEDIA */
+
+@media screen and (max-width: 1315px) {
+	.appFilterSectionLeft {
+		width: 60%;
+	}
+
+	.appDetailsSectionRight {
+		width: 40%;
+	}
+}
+
+@media screen and (max-width: 1105px) {
+	.appDetailsSectionRight {
+		display: none;
+	}
+
+	.appFilterSectionLeft {
+		width: 100%;
+	}
+
+	.sectionsWrapper {
+		justify-content: center;
+	}
+}
