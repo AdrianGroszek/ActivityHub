@@ -16,7 +16,7 @@
 
 .accordionItem:hover {
 	box-shadow: 0px 0px 8px rgba(3, 216, 195, 0.4);
-	scale: 1.01;
+	scale: 1.005;
 }
 
 .accordionIcon {
@@ -36,8 +36,10 @@
 }
 
 .accordionAnswer {
-	margin-top: 1rem;
+	max-height: 0;
+	overflow: hidden;
 	color: var(--color-gray);
+	transition: 0.5s;
 }
 
 .accordionTextContainer {

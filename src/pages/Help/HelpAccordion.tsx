@@ -78,9 +78,11 @@ export default function HelpAccordion() {
 							<h3>{item.question}</h3>
 							{selected === item.id ? <FaAngleUp /> : <FaAngleDown />}
 						</div>
-						{selected === item.id ? (
-							<p className={styles.accordionAnswer}>{item.answer}</p>
-						) : null}
+						<p
+							className={styles.accordionAnswer}
+							style={selected === item.id ? { maxHeight: '200px' } : undefined}>
+							{item.answer}
+						</p>
 					</div>
 				</li>
 			))}

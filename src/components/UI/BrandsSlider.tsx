@@ -66,7 +66,7 @@ export default function BrandsSlider() {
 					<li
 						key={item.brandName}
 						className={styles.item}
-						style={{ animationDelay: `calc((20s / 10) * ${index})` }}>
+						style={{ animationDelay: `calc((7s / 10) * ${index})` }}>
 						{item.icon}
 						<p>{item.brandName}</p>
 					</li>
